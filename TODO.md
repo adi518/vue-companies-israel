@@ -1,0 +1,7 @@
+- [ ] Meta tags
+- [ ] Favicon
+- [ ] Light mode
+- [x] Scroll to top
+- [ ] Sticky navbar
+- [x] Sticky table headers
+- [x] Prevent table default scroll behavior
