@@ -68,6 +68,6 @@
 
 ### 👨‍💻 Follow me on [Twitter](https://twitter.com/jodoron)
 
-If you found this project helpful, [buy](https://paypal.me/AdiSahar?locale.x=en_US) me a cup of coffee. ☕
+If you found this project helpful, [buy](http://paypal.me/getcardsdone/6.75USD) me a cup of coffee. ☕
 
 </div>

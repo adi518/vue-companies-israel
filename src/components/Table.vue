@@ -11,7 +11,7 @@
               :style="tdStyle"
               @click="sortTable(col.innerText)"
             >
-              {{ col.innerHTML }}
+              {{ col.innerText }}
               <span v-if="col.innerText === state.sortColumn">
                 {{ state.ascending ? "↑" : "↓" }}
               </span>
@@ -34,9 +34,17 @@
 </template>
 
 <script>
-import { parseTable } from "../utils";
-import { html as readmeHTML } from "../../README.md";
+import marked from "marked";
+import {
+  parseTable,
+  fetchStream,
+  setLocalStorage,
+  getLocalStorage,
+} from "../utils";
 import { ref, reactive, computed, onMounted } from "vue";
+
+const readmeUrl =
+  "https://raw.githubusercontent.com/JonathanDn/vue-companies-israel/main/README.md";
 
 export default {
   setup(props, context) {
@@ -52,16 +60,24 @@ export default {
 
     const getRef = () => root.value;
 
-    const getTable = () => {
-      return new Promise((resolve) => {
-        const element = document.createElement("template");
-        element.innerHTML = readmeHTML;
-        window.requestAnimationFrame(() => {
-          const table = element.content.querySelector("table");
-          resolve(parseTable(table));
-        });
+    const getTable = () =>
+      new Promise(async (resolve) => {
+        const table = getLocalStorage("table");
+        if (table) {
+          resolve(table);
+        } else {
+          const readme = await fetchStream(readmeUrl);
+          const html = marked(readme);
+          const element = document.createElement("template");
+          element.innerHTML = html;
+          window.requestAnimationFrame(() => {
+            const tableElement = element.content.querySelector("table");
+            const table = parseTable(tableElement);
+            setLocalStorage("table", table);
+            resolve(table);
+          });
+        }
       });
-    };
 
     const sortTable = (col, { ascending = true } = {}) => {
       if (state.sortColumn === col) {
@@ -109,7 +125,6 @@ $background-color: darken($color-secondary, 3.75%);
 
 .table {
   padding: 16rem;
-  // border-radius: 16rem;
   scroll-margin-top: inherit;
   border-radius: 0 0 16rem 16rem;
   background-color: $background-color;

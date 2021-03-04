@@ -1,7 +1,9 @@
-- [ ] Meta tags
 - [ ] Favicon
+- [ ] Meta tags
 - [ ] Light mode
-- [x] Scroll to top
 - [ ] Sticky navbar
+- [ ] Implement table search
+- [x] Scroll to top
 - [x] Sticky table headers
 - [x] Prevent table default scroll behavior
+- [x] Replace readme import with fetch (removes maintenance overhead)
